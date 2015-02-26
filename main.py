@@ -68,8 +68,8 @@ def main():
     list.append(m)
     list.append(o)
     list.append(c)
-    list.append(s)
     list.append(w)
+    list.append(s)
     diccionario_costos={}
     name = "camino.txt"
     laberinto = leerArchivo(name)
@@ -77,8 +77,8 @@ def main():
     # P = Portal
     # T = Templo
     # S = Piedras Magicas
-    #destinos={'K':[14,13],'T':[2,2],'S':[1,12],'F':[6,14]}
-    destinos={'K':[6,9],'T':[5,1],'S':[0,10],'F':[6,10]}
+    destinos={'K':[14,13],'T':[2,2],'S':[1,12],'F':[6,14]}
+    #destinos={'K':[6,9],'T':[5,1],'S':[0,10],'F':[6,10]}
     exit ={'P':[9,10]}
     #print "inicio %s " % buscarPosicion(p.getNombre()[0],laberinto)
     #print "final %s " % buscarPosicion(destinos['T'],laberinto)
@@ -86,22 +86,41 @@ def main():
     for i in list:
         dest = destinos.keys()
         for d in dest:
-            laberinto = leerArchivo(name)
-            algoritmo = Grafo(laberinto,puntos_iniciales[0],destinos[d],i)
-            for g in algoritmo.costos:
-                nom = ""+i.getNombre()[0]+"_"+str(d)
-                diccionario_costos[nom]=g
-            escribirSolucion(algoritmo.camino,laberinto,name,i,d)
-            #el siguiente codigo es para imprimir de la K,T,P a exit
-            laberinto = leerArchivo(name)
-            algoritmo1 = Grafo(laberinto,destinos[d],exit['P'],i)
-            for h in algoritmo1.costos:
-                nom = ""+i.getNombre()[0]+"_"+str(d)+"_"+"P"
-                diccionario_costos[nom]=h
-            escribirSolucionSalida(algoritmo1.camino,laberinto,name,i,d,exit)
-    finales=CostosTotales(diccionario_costos)
-    #caminos=SeleccionarMision(finales,list)
-    #GenerarUltimoCamino(caminos)
+            lista_movimientos={}
+            no_permitidos={}
+            lista_movimientos['0']=str(i.getMountain())
+            lista_movimientos['1']=str(i.getEarth())
+            lista_movimientos['2']=str(i.getWater())
+            lista_movimientos['3']=str(i.getSand())
+            lista_movimientos['4']=str(i.getForest())
+            lista_movimientos['5']=str(i.getSwamp())
+            lista_movimientos['6']=str(i.getSnow())
+            for m,v in lista_movimientos.iteritems():
+                if v=='0':
+                    no_permitidos[str(m)]=str(m) #Agregamos caminos no permitidos si el destino o portal estan en una casilla invalida no hacemos el algoritmo.
+            bandera=laberinto[destinos[d][0]][destinos[d][1]]
+            print bandera
+            print(no_permitidos)
+            if no_permitidos.has_key(bandera):
+                print "El personaje "+i.getNombre() +" no puede realizar mision de "+d+",porque el personaje no puede llegar a ese destino"
+                no_permitidos.clear()
+            else:
+                print "El personaje "+i.getNombre() +" esta realizado mision de "+d
+                algoritmo = Grafo(laberinto,puntos_iniciales[0],destinos[d],i)
+                for g in algoritmo.costos:
+                    nom = ""+i.getNombre()[0]+"_"+str(d)
+                    diccionario_costos[nom]=g
+                escribirSolucion(algoritmo.camino,laberinto,name,i,d)
+                #el siguiente codigo es para imprimir de la K,T,P a exit
+                laberinto = leerArchivo(name)
+                algoritmo1 = Grafo(laberinto,destinos[d],exit['P'],i)
+                for h in algoritmo1.costos:
+                    nom = ""+i.getNombre()[0]+"_"+str(d)+"_"+"P"
+                    diccionario_costos[nom]=h
+                escribirSolucionSalida(algoritmo1.camino,laberinto,name,i,d,exit)
+                finales=CostosTotales(diccionario_costos)
+                #caminos=SeleccionarMision(finales,list)
+                #GenerarUltimoCamino(caminos)
 
 def SeleccionarMision(finales,list):
     Letras={}

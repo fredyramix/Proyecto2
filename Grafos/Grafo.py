@@ -74,7 +74,10 @@ class Grafo:
 
     #Pasa el vecino con menor costo (G+H) a la lista cerrada
     def f_menor(self):
-        actual = self.abierta[0]
+        try:
+            actual = self.abierta[0]
+        except IndexError,e:
+            pass
         n = 0
         for i in range(1, len(self.abierta)):
             if self.abierta[i].f < actual.f:
