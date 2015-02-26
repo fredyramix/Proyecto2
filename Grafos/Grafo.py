@@ -74,10 +74,11 @@ class Grafo:
 
     #Pasa el vecino con menor costo (G+H) a la lista cerrada
     def f_menor(self):
-        try:
-            actual = self.abierta[0]
-        except IndexError,e:
-            pass
+        #try:
+        actual = self.abierta[0]
+        #except IndexError,e:
+            #pass
+         #   return False
         n = 0
         for i in range(1, len(self.abierta)):
             if self.abierta[i].f < actual.f:
@@ -144,9 +145,9 @@ class Grafo:
 
         return camino
 #Escribe una ruta con caracteres en un archivo
-def escribirSolucion(camino,laberinto,name,p,final):
+def escribirSolucion(camino,laberinto,name,p,final,q):
     inicio=p.getNombre()[0]
-    sname = "Soluciones\ "+str(inicio)+"_"+final+""
+    sname = "Soluciones\ "+q+"_"+str(inicio)+"_"+final+""
     solucion = open(sname,'w')
     for posicion in camino:
         laberinto[ posicion[0]][ posicion[1]] = inicio #Escribe la letra del Personaje
@@ -157,11 +158,11 @@ def escribirSolucion(camino,laberinto,name,p,final):
         solucion.write(linea+"\n")
     solucion.close()
 
-def escribirSolucionSalida(camino,laberinto,name,p,final,exit):
+def escribirSolucionSalida(camino,laberinto,name,p,final,exit,q):
     e = exit.keys()
     Inicio=p.getNombre()[0]
     Final = final
-    sname = "Soluciones\ "+str(Inicio)+"_"+final+"_P"
+    sname = "Soluciones\ "+q+"_"+str(Inicio)+"_"+final+"_P"
     solucion = open(sname,'w')
     for posicion in camino:
         laberinto[ posicion[0]][ posicion[1]] = Inicio
