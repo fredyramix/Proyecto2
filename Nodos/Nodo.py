@@ -17,6 +17,8 @@ class Nodo:
             self.g = 0
         else:
             #raw_input("espera")
+            if str(laberinto[posicion[0]][posicion[1]]) == str(0):
+                self.g = self.padre.g + p.Mountain()
             if str(laberinto[posicion[0]][posicion[1]]) == str(1):
                 self.g = self.padre.g + p.getEarth()
             elif str(laberinto[posicion[0]][posicion[1]]) == str(4):
@@ -25,8 +27,12 @@ class Nodo:
                 self.g = self.padre.g + p.getSand()
             elif str(laberinto[posicion[0]][posicion[1]]) == str(2):
                 self.g = self.padre.g + p.getWater()
-            #else:
-                #self.g = self.padre.g + 1000
+            elif str(laberinto[posicion[0]][posicion[1]]) == str(5):
+                self.g = self.padre.g + p.getSwamp()
+            elif str(laberinto[posicion[0]][posicion[1]]) == str(6):
+                self.g = self.padre.g + p.getSnow()
+            else:
+                self.g = self.padre.g + 1000
         self.f = self.g + self.h
 
 # Calcula la distancia manhattan<

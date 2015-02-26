@@ -29,28 +29,48 @@ class Grafo:
 
     #Devuelve una lista con vecinos transitables
     def vecinos(self,nodo,p,laberinto):
-            vecinos = []
-            try:
-                if self.laberinto[nodo.posicion[0]+1][nodo.posicion[1]] != '0':
-                    vecinos.append(Nodo(self.pos_final,[nodo.posicion[0]+1, nodo.posicion[1]],nodo,p,laberinto))
-            except IndexError,e:
+        vecinos = []
+        lista_movimientos={}
+        no_permitidos={}
+        lista_movimientos['0']=str(p.getMountain())
+        lista_movimientos['1']=str(p.getEarth())
+        lista_movimientos['2']=str(p.getWater())
+        lista_movimientos['3']=str(p.getSand())
+        lista_movimientos['4']=str(p.getForest())
+        lista_movimientos['5']=str(p.getSwamp())
+        lista_movimientos['6']=str(p.getSnow())
+        for m,v in lista_movimientos.iteritems():
+            if v=='0':
+                no_permitidos[str(m)]=str(m)
+        try:
+            if no_permitidos.has_key(str(self.laberinto[nodo.posicion[0]+1][nodo.posicion[1]])):
                 pass
-            try:
-                if self.laberinto[nodo.posicion[0]-1][nodo.posicion[1]] != '0':
-                    vecinos.append( Nodo(self.pos_final,[nodo.posicion[0]-1, nodo.posicion[1]],nodo,p,laberinto))
-            except IndexError,e:
+            else:
+                vecinos.append(Nodo(self.pos_final,[nodo.posicion[0]+1, nodo.posicion[1]],nodo,p,laberinto))
+        except IndexError,e:
+            pass
+        try:
+            if no_permitidos.has_key(str(self.laberinto[nodo.posicion[0]-1][nodo.posicion[1]])):
                 pass
-            try:
-                if self.laberinto[nodo.posicion[0]][nodo.posicion[1]-1] != '0':
-                    vecinos.append(Nodo(self.pos_final,[nodo.posicion[0], nodo.posicion[1]-1],nodo,p,laberinto))
-            except IndexError,e:
+            else:
+                vecinos.append( Nodo(self.pos_final,[nodo.posicion[0]-1, nodo.posicion[1]],nodo,p,laberinto))
+        except IndexError,e:
+            pass
+        try:
+            if no_permitidos.has_key(str(self.laberinto[nodo.posicion[0]][nodo.posicion[1]-1])):
                 pass
-            try:
-                if self.laberinto[nodo.posicion[0]][nodo.posicion[1]+1] != '0':
-                    vecinos.append( Nodo(self.pos_final,[nodo.posicion[0], nodo.posicion[1]+1],nodo,p,laberinto))
-            except IndexError, e:
+            else:
+                vecinos.append(Nodo(self.pos_final,[nodo.posicion[0], nodo.posicion[1]-1],nodo,p,laberinto))
+        except IndexError,e:
+            pass
+        try:
+            if no_permitidos.has_key(str(self.laberinto[nodo.posicion[0]][nodo.posicion[1]+1])):
                 pass
-            return vecinos
+            else:
+                vecinos.append( Nodo(self.pos_final,[nodo.posicion[0], nodo.posicion[1]+1],nodo,p,laberinto))
+        except IndexError, e:
+            pass
+        return vecinos
 
     #Pasa el vecino con menor costo (G+H) a la lista cerrada
     def f_menor(self):

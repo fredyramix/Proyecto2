@@ -17,14 +17,30 @@ class Personaje(object):
         self.mountain = costo
         self.inicio=[]
         self.mision=nada
+        self.swamp=costo
+        self.snow=costo
 
     def __str__(self):
         p = "Nombre: " + self.nombre + "\nMountain: " + str(self.mountain)+  "\nEarth: " + str(self.earth) +"\nWater: " + str(self.water) + "\nSand: " + str(
         self.sand) + "\nForest: " + str(self.forest)
         return p
 
-    def getInicio(self):
-        return self.inicio
+    def getSwamp(self):
+        return self.swamp
+
+
+    def setSwamp(self, x):
+        self.swamp = x
+
+    def getSwamp(self):
+        return self.swamp
+
+
+    def setSnow(self, x):
+        self.snow = x
+
+    def getSnow(self):
+        return self.snow
 
 
     def setInicio(self, x):

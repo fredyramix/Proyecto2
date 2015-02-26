@@ -7,34 +7,69 @@ __author__ = 'fredy'
 # Por ultimo escribe un archivo con formato solucion_archivo.txt en donde escribe el mejor camino encontrado.
 
 def main():
-
+    puntos_iniciales=[[9,1],[13,2],[13,4]]
     p = Personaje("Humano")
+    p.setMountain(0)
     p.setEarth(1)
-    p.setForest(4)
-    p.setMountain(0) # N/A
-    p.setSand(3)
     p.setWater(2)
-    p.setInicio([13,2])
+    p.setSand(3)
+    p.setForest(4)
+    p.setSwamp(5)
+    p.setSnow(5)
+    #p.setInicio([13,2])
 
     m = Personaje("Monkey")
+    m.setMountain(0)
     m.setEarth(2)
-    m.setForest(1)
-    m.setMountain(0) # N/A
-    m.setSand(3)
     m.setWater(4)
-    m.setInicio([13,4])
+    m.setSand(3)
+    m.setForest(1)
+    m.setSwamp(5)
+    m.setSnow(0)
 
     o = Personaje("Octopus")
+    o.setMountain(0)
     o.setEarth(2)
-    o.setForest(3)
-    o.setMountain(0) # N/A
-    o.setSand(0) #N/A
     o.setWater(1)
-    o.setInicio([9,1])
+    o.setSand(0)
+    o.setForest(3)
+    o.setSwamp(2)
+    o.setSnow(0)
+
+    c = Personaje("Croc")
+    c.setMountain(0)
+    c.setEarth(3)
+    c.setWater(2)
+    c.setSand(4)
+    c.setForest(5)
+    c.setSwamp(1)
+    c.setSnow(0)
+
+    s = Personaje("Sasquatch")
+    s.setMountain(15)
+    s.setEarth(4)
+    s.setWater(0)
+    s.setSand(0)
+    s.setForest(4)
+    s.setSwamp(5)
+    s.setSnow(3)
+
+    w = Personaje("WereWolf")
+    w.setMountain(0)
+    w.setEarth(1)
+    w.setWater(3)
+    w.setSand(4)
+    w.setForest(2)
+    w.setSwamp(0)
+    w.setSnow(3)
+
     list = []
     list.append(p)
     list.append(m)
     list.append(o)
+    list.append(c)
+    list.append(s)
+    list.append(w)
     diccionario_costos={}
     name = "camino.txt"
     laberinto = leerArchivo(name)
@@ -42,8 +77,9 @@ def main():
     # P = Portal
     # T = Templo
     # S = Piedras Magicas
-    destinos={'K':[14,13],'T':[6,7],'S':[2,14]}
-    exit ={'P':[12,3]}
+    #destinos={'K':[14,13],'T':[2,2],'S':[1,12],'F':[6,14]}
+    destinos={'K':[6,9],'T':[5,1],'S':[0,10],'F':[6,10]}
+    exit ={'P':[9,10]}
     #print "inicio %s " % buscarPosicion(p.getNombre()[0],laberinto)
     #print "final %s " % buscarPosicion(destinos['T'],laberinto)
     #algoritmo = Grafo(laberinto,p.getNombre()[0],destinos['T'],p)
@@ -51,7 +87,7 @@ def main():
         dest = destinos.keys()
         for d in dest:
             laberinto = leerArchivo(name)
-            algoritmo = Grafo(laberinto,i.getInicio(),destinos[d],i)
+            algoritmo = Grafo(laberinto,puntos_iniciales[0],destinos[d],i)
             for g in algoritmo.costos:
                 nom = ""+i.getNombre()[0]+"_"+str(d)
                 diccionario_costos[nom]=g
@@ -64,8 +100,8 @@ def main():
                 diccionario_costos[nom]=h
             escribirSolucionSalida(algoritmo1.camino,laberinto,name,i,d,exit)
     finales=CostosTotales(diccionario_costos)
-    caminos=SeleccionarMision(finales,list)
-    GenerarUltimoCamino(caminos)
+    #caminos=SeleccionarMision(finales,list)
+    #GenerarUltimoCamino(caminos)
 
 def SeleccionarMision(finales,list):
     Letras={}
