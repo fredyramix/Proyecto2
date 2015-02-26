@@ -1,0 +1,7 @@
+try:
+            var =self.laberinto[nodo.posicion[0]+1][nodo.posicion[1]]
+            var=int(var)
+            if  (var != 0) :#and (var == p.getEarth() or var == p.getForest() or var == p.getSand() or var == p.getWater()):
+                vecinos.append(Nodo(self.pos_final,[nodo.posicion[0]+1, nodo.posicion[1]],nodo,p,laberinto))
+        except IndexError,e:
+            pass
