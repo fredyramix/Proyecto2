@@ -9,6 +9,7 @@ class Grafo:
     abierta : lista con caminos abiertos
     cerrada : lista con caminos cerrados o inutiles
     """
+
     def __init__(self,laberinto,inicio,final,p):
         self.laberinto = laberinto  #Grafo ahora tiene un atributo con todos los nodos.
        #columnas, filas
@@ -24,6 +25,9 @@ class Grafo:
         self.abierta += self.vecinos(self.inicio,p,laberinto)
         while self.objetivo():
             self.buscar(p,laberinto)
+            #b=self.buscar(p,laberinto)
+            #if(b==False):
+                #return None
         self.camino = self.camino()
 
 
@@ -74,11 +78,7 @@ class Grafo:
 
     #Pasa el vecino con menor costo (G+H) a la lista cerrada
     def f_menor(self):
-        #try:
         actual = self.abierta[0]
-        #except IndexError,e:
-            #pass
-         #   return False
         n = 0
         for i in range(1, len(self.abierta)):
             if self.abierta[i].f < actual.f:
@@ -114,6 +114,7 @@ class Grafo:
     # Analiza el elemento que recien se agrego a la lista cerrada es decir el nodo padre.
     def buscar(self,p,laberinto):
         self.f_menor()
+        #a=self.f_menor()
         self.select = self.cerrada[-1]
         self.nodos = self.vecinos(self.select,p,laberinto)
         self.ruta()
@@ -195,3 +196,4 @@ def buscarPosicion(x,laberinto):
         for columna in range(len(laberinto[0])):
             if laberinto[fila][columna] == x:
                 return [fila,columna]
+

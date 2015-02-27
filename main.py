@@ -78,8 +78,8 @@ def main():
     # P = Portal
     # T = Templo
     # S = Piedras Magicas
-    destinos={'K':[14,10],'T':[2,2],'S':[6,8],'F':[7,14]}
-    #destinos={'K':[6,9],'T':[5,1],'S':[0,10],'F':[6,10]}
+    destinos={'K':[14,13],'T':[2,2],'S':[1,12],'F':[6,14]}
+    #destinos={'K':[6,9],'T':[4,1],'S':[2,9],'F':[6,9]}
     exit ={'P':[9,10]}
     #print "inicio %s " % buscarPosicion(p.getNombre()[0],laberinto)
     #print "final %s " % buscarPosicion(destinos['T'],laberinto)
@@ -100,32 +100,58 @@ def main():
                 lista_movimientos['4']=str(i.getForest())
                 lista_movimientos['5']=str(i.getSwamp())
                 lista_movimientos['6']=str(i.getSnow())
+                laberinto = leerArchivo(name)
                 for m,v in lista_movimientos.iteritems():
                     if v=='0':
                         no_permitidos[str(m)]=str(m) #Agregamos caminos no permitidos si el destino o portal estan en una casilla invalida no hacemos el algoritmo.
                 bandera=laberinto[destinos[d][0]][destinos[d][1]]
-                print bandera
-                print(no_permitidos)
+                print "Bandera="+str(bandera)
+                print "su lista de no permitidos: \n"
+                print no_permitidos
+                print i.getEarth()
+                print i.getMountain()
+                print i.getForest()
+                print i.getWater()
+                print i.getSwamp()
+                print i.getSand()
+                print i.getSnow()
                 if no_permitidos.has_key(bandera):
                     print "El personaje "+i.getNombre() +" no puede realizar mision de "+d+",porque el personaje no puede llegar a ese destino"
+                    ruta1=""+q+"_"+i.getNombre()[0]+"_"+d+"_P"
+                    ruta2=""+q+"_"+i.getNombre()[0]+"_"+d
+                    diccionario_costos[ruta1]=-1 #significa que no tiene mision pero lo necesitamos para geneticos
+                    diccionario_costos[ruta2]=-1
+                    #con esto aseguramos tener un cromosoma completo.
                     no_permitidos.clear()
                 else:
                     print "El personaje "+i.getNombre() +" esta realizado mision de "+d
-                    algoritmo = Grafo(laberinto,puntons_inicilaes[q],destinos[d],i)
-                    for g in algoritmo.costos:
-                        nom = ""+q+"_"+i.getNombre()[0]+"_"+str(d)
-                        diccionario_costos[nom]=g
-                    escribirSolucion(algoritmo.camino,laberinto,name,i,d,q)
-                    #el siguiente codigo es para imprimir de la K,T,P a exit
-                    laberinto = leerArchivo(name)
-                    algoritmo1 = Grafo(laberinto,destinos[d],exit['P'],i)
-                    for h in algoritmo1.costos:
-                        nom = ""+q+"_"+i.getNombre()[0]+"_"+str(d)+"_"+"P"
-                        print nom
-                        diccionario_costos[nom]=h
-                    escribirSolucionSalida(algoritmo1.camino,laberinto,name,i,d,exit,q)
-            finales=CostosTotales(diccionario_costos)
+                    try:
+                        algoritmo = Grafo(laberinto,puntons_inicilaes[q],destinos[d],i)
+                        #if algoritmo is not None:
+                        for g in algoritmo.costos:
+                            nom = ""+q+"_"+i.getNombre()[0]+"_"+str(d)
+                            diccionario_costos[nom]=g
+                        escribirSolucion(algoritmo.camino,laberinto,name,i,d,q)
+                        #el siguiente codigo es para imprimir de la K,T,P a exit
+                        laberinto = leerArchivo(name)
+                        algoritmo1 = Grafo(laberinto,destinos[d],exit['P'],i)
+                        for h in algoritmo1.costos:
+                            nom = ""+q+"_"+i.getNombre()[0]+"_"+str(d)+"_"+"P"
+                            print nom
+                            diccionario_costos[nom]=h
+                        escribirSolucionSalida(algoritmo1.camino,laberinto,name,i,d,exit,q)
+                        no_permitidos.clear()
+                    except IndexError,e:
+                        print "No hay forma de llegar al objetivo"
+                        ruta3=""+q+"_"+i.getNombre()[0]+"_"+d+"_P"
+                        ruta4=""+q+"_"+i.getNombre()[0]+"_"+d
+                        diccionario_costos[ruta3]=-1 #significa que no tiene mision pero lo necesitamos para geneticos
+                        diccionario_costos[ruta4]=-1
+                finales=CostosTotales(diccionario_costos)
     print finales
+    print len(finales)
+
+
                 #caminos=SeleccionarMision(finales,list)
                 #GenerarUltimoCamino(caminos)
 
