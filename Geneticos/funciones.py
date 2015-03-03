@@ -11,6 +11,7 @@ def personaje_aleatorio():
 
 
 def BuscaRepetido(lista, elemento):
+    print lista
     if len(lista) !=0:
         for x in lista:
             if x[1]==elemento:
@@ -38,7 +39,10 @@ def ComprobacionCosto(punto,personaje,d,costos):
     destinos ={1:'T',2:'K',3:'S',4:'F'}
     cadena=""+puntos[punto]+"_"+personajes[personaje]+"_"+destinos[d]+"_P"
     if costos.has_key(cadena):
-        valor = costos[cadena]
+        if costos[cadena] == "-2":
+            return True
+        else:
+            return False
+    else:
         return True
-    else: return False
 
