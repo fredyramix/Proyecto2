@@ -25,9 +25,6 @@ class Grafo:
         self.abierta += self.vecinos(self.inicio,p,laberinto)
         while self.objetivo():
             self.buscar(p,laberinto)
-            #b=self.buscar(p,laberinto)
-            #if(b==False):
-                #return None
         self.camino = self.camino()
 
 
@@ -173,7 +170,16 @@ def escribirSolucionSalida(camino,laberinto,name,p,final,exit,q):
             linea = linea + laberinto[i][j] + " "
         solucion.write(linea+"\n")
     solucion.close()
-
+def EscribeTablaCostos(costos):
+    lista = costos.items()
+    lista.sort()
+    name = "Soluciones\costos.txt"
+    solucion = open(name,'w')
+    for i in lista:
+        linea = ""
+        linea = linea + str(i) + " "
+        solucion.write(linea+"\n")
+    solucion.close()
 
 #Para leer un archivo y crear el laberinto
 def leerArchivo(name):

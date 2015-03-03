@@ -105,16 +105,6 @@ def main():
                     if v=='0':
                         no_permitidos[str(m)]=str(m) #Agregamos caminos no permitidos si el destino o portal estan en una casilla invalida no hacemos el algoritmo.
                 bandera=laberinto[destinos[d][0]][destinos[d][1]]
-                print "Bandera="+str(bandera)
-                print "su lista de no permitidos: \n"
-                print no_permitidos
-                print i.getEarth()
-                print i.getMountain()
-                print i.getForest()
-                print i.getWater()
-                print i.getSwamp()
-                print i.getSand()
-                print i.getSnow()
                 if no_permitidos.has_key(bandera):
                     print "El personaje "+i.getNombre() +" no puede realizar mision de "+d+",porque el personaje no puede llegar a ese destino"
                     ruta1=""+q+"_"+i.getNombre()[0]+"_"+d+"_P"
@@ -137,10 +127,11 @@ def main():
                         algoritmo1 = Grafo(laberinto,destinos[d],exit['P'],i)
                         for h in algoritmo1.costos:
                             nom = ""+q+"_"+i.getNombre()[0]+"_"+str(d)+"_"+"P"
-                            print nom
+                            #print nom
                             diccionario_costos[nom]=h
                         escribirSolucionSalida(algoritmo1.camino,laberinto,name,i,d,exit,q)
                         no_permitidos.clear()
+                        print "El personaje "+i.getNombre() +" Logro el objetivo"
                     except IndexError,e:
                         print "No hay forma de llegar al objetivo"
                         ruta3=""+q+"_"+i.getNombre()[0]+"_"+d+"_P"
@@ -148,12 +139,19 @@ def main():
                         diccionario_costos[ruta3]=-1 #significa que no tiene mision pero lo necesitamos para geneticos
                         diccionario_costos[ruta4]=-1
                 finales=CostosTotales(diccionario_costos)
-    print finales
-    print len(finales)
+    EscribeTablaCostos(finales)
+    print "Se ha generado el archivo 'costos.txt' con toda la tabla de costos."
+    Humano=[]
+    Monkey=[]
+    Octopus=[]
+    Croc=[]
+    Sasquatch=[]
+    Werewolf=[]
+    #candena = ""+p+"_"+H+"_"+d+"_P"
+    #Humano.append(finales['P1_H_S_P'])
+    #print Humano
 
 
-                #caminos=SeleccionarMision(finales,list)
-                #GenerarUltimoCamino(caminos)
 
 def SeleccionarMision(finales,list):
     Letras={}
@@ -238,7 +236,7 @@ def CostosTotales(diccionario):
     finales={}
     costos = diccionario.items()
     costos.sort()
-    print costos
+    #print costos
     while len(costos)>0:
         suma=int(costos[0][1])+ int(costos[1][1])
         #print "El costo de "+str(costos[1][0]) + " Es de :" + str(suma)
