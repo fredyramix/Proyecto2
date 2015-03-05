@@ -109,8 +109,8 @@ def main():
                     print "El personaje "+i.getNombre() +" no puede realizar mision de "+d+",porque el personaje no puede llegar a ese destino"
                     ruta1=""+q+"_"+i.getNombre()[0]+"_"+d+"_P"
                     ruta2=""+q+"_"+i.getNombre()[0]+"_"+d
-                    diccionario_costos[ruta1]=-1 #significa que no tiene mision pero lo necesitamos para geneticos
-                    diccionario_costos[ruta2]=-1
+                    diccionario_costos[ruta1]=500000 #significa que no tiene mision pero lo necesitamos para geneticos
+                    diccionario_costos[ruta2]=500000
                     #con esto aseguramos tener un cromosoma completo.
                     no_permitidos.clear()
                 else:
@@ -136,8 +136,8 @@ def main():
                         print "No hay forma de llegar al objetivo"
                         ruta3=""+q+"_"+i.getNombre()[0]+"_"+d+"_P"
                         ruta4=""+q+"_"+i.getNombre()[0]+"_"+d
-                        diccionario_costos[ruta3]=-1 #significa que no tiene mision pero lo necesitamos para geneticos
-                        diccionario_costos[ruta4]=-1
+                        diccionario_costos[ruta3]=500000 #significa que no tiene mision pero lo necesitamos para geneticos
+                        diccionario_costos[ruta4]=500000
                 finales=CostosTotales(diccionario_costos)
     EscribeTablaCostos(finales)
     print "Se ha generado el archivo 'costos.txt' con toda la tabla de costos."

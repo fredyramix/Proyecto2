@@ -173,11 +173,12 @@ def escribirSolucionSalida(camino,laberinto,name,p,final,exit,q):
 def EscribeTablaCostos(costos):
     lista = costos.items()
     lista.sort()
+
     name = "Soluciones\costos.txt"
     solucion = open(name,'w')
     for i in lista:
         linea = ""
-        linea = linea + str(i) + ""
+        linea = linea + str(i[0]) + ","+str(i[1])
         solucion.write(linea+"\n")
     solucion.close()
 

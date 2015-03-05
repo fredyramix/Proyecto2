@@ -11,7 +11,7 @@ def main(): #recibira una tabla de costos. los puntos de incio y los personajes.
     #Hacer una funcion para leer el archivo de costos y agregarlos a un diccionario:
     costos = LeerTablaCostos()
     #print costos
-    p =5#Numero de individuos
+    p =10#Numero de individuos
     nobj=4 #numero de objetivos es el tamaño que tendrá nuestro cromosoma.
     poblacion=[]
     count =1
@@ -39,7 +39,7 @@ def main(): #recibira una tabla de costos. los puntos de incio y los personajes.
     for individuo in poblacion:
         print individuo
     #Despues continua el ciclo hasta el numero de iteraciones que se considere.
-    NG=500 #numero de generaciones
+    NG=2000 #numero de generaciones
     x=1
     while x != NG:
         print "Calculando FX"
@@ -88,29 +88,47 @@ def main(): #recibira una tabla de costos. los puntos de incio y los personajes.
             print li
         print "Continua proceso de mutacion"
         mutados=Mutacion(lista_ya_cruzada,p)
+        while mutados==False:
+            mutados=Mutacion(lista_ya_cruzada,p)
+        #raw_input("Encontro cromosoma valido")
         poblacion=mutados
         x=x+1
+        print best
+        #raw_input("Esperar....")
     puntos ={'1':'P1','2':'P2','3':'P3'}
     personajes ={'1':'HUMANO','2':'MONKEY','3':'CROC','4':'OCTOPUS','5':'SASQUATCH','6':'WEREWOLF'}
+    personajes2 ={'1':'H','2':'M','3':'C','4':'O','5':'S','6':'W'}
     print "Acabo en numero de generacion= " + str(x)
     print("El resultado final es: \n")
     print("Asignando Misiones: \n")
-    print"Mision de Templo:"
+    print"==========Mision de Templo:========="
     a= best[0]
-    print puntos[str(a[0])]
-    print personajes[str(a[1])]
-    print"Mision de Key:"
+    print "Punto de Partida: "+ puntos[str(a[0])]
+    print "Personaje Seleccionado: "+personajes[str(a[1])]
+    cadena=""+puntos[str(a[0])]+"_"+personajes2[str(a[1])]+"_T_P"
+    print "Costo: "+ str(costos[cadena])
+    print"==========Mision de Key:============"
     a= best[1]
-    print puntos[str(a[0])]
-    print personajes[str(a[1])]
-    print"Magic Stone:"
+    print "Punto de Partida: "+ puntos[str(a[0])]
+    print "Personaje Seleccionado: "+personajes[str(a[1])]
+    cadena=""+puntos[str(a[0])]+"_"+personajes2[str(a[1])]+"_K_P"
+    print "Costo: "+ str(costos[cadena])
+    print"==========Magic Stone:============"
     a= best[2]
-    print puntos[str(a[0])]
-    print personajes[str(a[1])]
-    print"Rescue a captive Friend :"
+    print "Punto de Partida: "+ puntos[str(a[0])]
+    print "Personaje Seleccionado: "+personajes[str(a[1])]
+    cadena=""+puntos[str(a[0])]+"_"+personajes2[str(a[1])]+"_S_P"
+    print "Costo: "+ str(costos[cadena])
+    print"==========Rescue a captive Friend:=============="
     a= best[3]
-    print puntos[str(a[0])]
-    print personajes[str(a[1])]
-    print"Total Cost:"
+    print "Punto de Partida: "+ puntos[str(a[0])]
+    print "Personaje Seleccionado: "+personajes[str(a[1])]
+    cadena=""+puntos[str(a[0])]+"_"+personajes2[str(a[1])]+"_F_P"
+    print "Costo: "+ str(costos[cadena])
+    print"=========Total Cost:==============="
     print best[4]
+    import winsound
+    Freq = 2500 # Set Frequency To 2500 Hertz
+    Dur = 100 # Set Duration To 1000 ms == 1 second
+    winsound.Beep(Freq,Dur)
 main()

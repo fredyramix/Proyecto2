@@ -27,6 +27,11 @@ def Mutacion(cromozomas_cruzados,p):
         nuevo_mutado.append(lisss)
         del m[0:5]
     print nuevo_mutado
+    while VerificarMutacion(nuevo_mutado)==False:
+        #no cromosomas validos
+        #raw_input("Encontro cromosoma invalido")
+        return False
+        break
     cromozomas_cruzados[n]=nuevo_mutado
     for x in cromozomas_cruzados:
         print x
@@ -63,3 +68,16 @@ def Convertir_a_Binario(X):
     else:
         alistada[n]='0'
     return alistada
+
+def VerificarMutacion(nuevo_mutado):
+    bandera=True
+    for i in nuevo_mutado:
+        if i[0] > 0 and i[1] >0 and i[1]<7 :
+            print i
+            bandera=True
+        else:
+            print i
+            bandera=False
+            break
+
+    return bandera

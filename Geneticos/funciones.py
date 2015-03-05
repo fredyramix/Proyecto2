@@ -22,13 +22,18 @@ def LeerTablaCostos():
     archi=open('../Soluciones/costos.txt','r')
     linea="a"
     while linea!="":
-        linea=archi.readline()
-        #sin = linea.split(' ')
-        #print sin
-        #raw_input("Espera")
-        a= linea[2:10]
-        b=linea[13:15]
-        dic[a]=b
+        try:
+            linea=archi.readline()
+            lin= linea.split(',')
+            print lin
+            #print sin
+            #raw_input("Espera")
+            a= lin[0]
+            c=lin[1]
+            b=c[:-1]
+            dic[a]=b
+        except IndexError,e:
+            pass #Este error se produce por caracter de salto de linea en el ultimo archivo
     archi.close()
     return dic #retorna en forma de diccionario todos los costos 'P3_M_K_P':'costo'
 
@@ -38,15 +43,15 @@ def ComprobacionCosto(punto,personaje,d,costos,lista):
     destinos ={1:'T',2:'K',3:'S',4:'F'}
     cadena=""+puntos[punto]+"_"+personajes[personaje]+"_"+destinos[d]+"_P"
     if costos.has_key(cadena):
-        if costos[cadena] == "-2":
+        if costos[cadena] == "1000000":
             return True
         else:
             if len(lista) !=0:
                 for x in lista:
                     if x[1]==personaje:
                         return True
-                    else:
-                        return False
+                    #else:
+                    #   return False
             return False
     else:
         return True
@@ -59,14 +64,11 @@ def CalculoFX(poblacion,costos):
         ob=1 # posicion en cromosoma tenemos 4 porque son 4 objetivos
         sum = 0
         for obj in ind:
-            try:
-                cadena=""+puntos[str(obj[0])]+"_"+personajes[str(obj[1])]+"_"+destinos[str(ob)]+"_P"
-                valor = costos[cadena]
-                sum = sum + int(valor)
-                ob = ob + 1
-            except KeyError:
-                sum=10000
-                ob = ob + 1
+            cadena=""+puntos[str(obj[0])]+"_"+personajes[str(obj[1])]+"_"+destinos[str(ob)]+"_P"
+            valor = costos[cadena]
+            print valor
+            sum = sum + int(valor)
+            ob = ob + 1
         ind.append(sum)
     return poblacion
 
@@ -84,19 +86,17 @@ def Penalizar(poblacion,costos):
             try:
                 cadena=""+puntos[str(ob[0])]+"_"+personajes[str(ob[1])]+"_"+destinos[str(count)]+"_P"
                 cost=costos[cadena]
-                if cost=="-2":
+                if cost=="1000000":
                     print "Esta penalizando por costo infinito"
                     print cadena
                     pena=pena+10000
             except TypeError,e:
                 pass #lo que pasa es que metimos f(X) y no corresponde el tamaño
-            except KeyError:
-                pena=pena+10000
             try:
                 listaPersonajes.append(ob[1])
                 count=count+1
             except TypeError,e:
-                pena=pena+10000
+                pena=0
                 pass
 
         #print listaPersonajes
@@ -156,7 +156,7 @@ def SeleccionParejas(opciones,p):
     while count!=p:
         n=random.randrange(0,100)
         for x in opciones:
-            if n <= int(x[6]):
+            if int(x[6]) <= n:
                 tabla_hijos.append(x[:4])
                 count=count+1
                 break
