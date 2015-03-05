@@ -177,7 +177,7 @@ def EscribeTablaCostos(costos):
     solucion = open(name,'w')
     for i in lista:
         linea = ""
-        linea = linea + str(i) + " "
+        linea = linea + str(i) + ""
         solucion.write(linea+"\n")
     solucion.close()
 

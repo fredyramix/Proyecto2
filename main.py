@@ -141,95 +141,11 @@ def main():
                 finales=CostosTotales(diccionario_costos)
     EscribeTablaCostos(finales)
     print "Se ha generado el archivo 'costos.txt' con toda la tabla de costos."
-    Humano=[]
-    Monkey=[]
-    Octopus=[]
-    Croc=[]
-    Sasquatch=[]
-    Werewolf=[]
-    #candena = ""+p+"_"+H+"_"+d+"_P"
-    #Humano.append(finales['P1_H_S_P'])
-    #print Humano
-
-
-
-def SeleccionarMision(finales,list):
-    Letras={}
-    destinos={}
-    l=finales.items()
-    l.sort()
-    l.sort(key=lambda x:x[1]) #Aqui ya estan ordenadas por menor costo.
-    print l
-    bandera= True
-    while len(l)>0:
-        a=l[0][0] #obtengo la primer mision de menor costo.
-        if Letras.has_key(a[0]):
-            print "Ya tiene llave"
-        else:
-            if destinos.has_key(a[2]):
-                "Ya tiene ese desitno"
-            else:
-                Letras[a[0]]=l[0][0]
-                destinos[a[2]]=a[2]
-        l.remove((l[0][0],l[0][1]))
-    print Letras
-    return Letras
-def GenerarUltimoCamino(caminos):
-
-    #Funcion para generar mapa final.
-    #Solo leera 3 caminos que hay que mezclar.
-    #Las posibles combinaciones son:
-    #Humano - Monkey  = B
-    #Humano - Octopus = C
-    #Monkey- Octopus. = D
-    #Humano - Monkey - Octopus. = A
-    nombre = " "+caminos['H']
-    nombre2= " "+caminos['M']
-    nombre3= " "+caminos['O']
-    primer_camino = leerMisiones(nombre)
-    segundo_camino = leerMisiones(nombre2)
-    tercer_camino = leerMisiones(nombre3)
-
-    diccionario={'A':'A','B':'B','C':'C'}
-    person={'H_M_O':'A','H_O_M':'A','M_H_O':'A','M_O_H':'A','O_H_M':'A','O_M_H':'A', #todos juntos
-            'H_M':'B','M_H':'B', #humano con mono
-            'H_O':'C','O_H':'C', #humano con octopus
-            'O_H':'D','O_M':'D'#octopus con mono
-             }
-    sname = "Soluciones\Mision_Completada.txt"
-    solucion = open(sname,'w')
-    for i in range(len(primer_camino)):
-        linea = ""
-        for j in range(len(primer_camino)):
-            a=primer_camino[i][j]
-            b=segundo_camino[i][j]
-            c=tercer_camino[i][j]
-            concatenacion=""
-            if a=='H' or a=='M' or a=='O':
-                if b=='H' or b=='M' or b=='O':
-                    if  c=='H' or c=='M' or c=='O':
-                        concatenacion =""+str(a)+"_"+str(b)+"_"+str(c)
-                    else:
-                        concatenacion =""+str(a)+"_"+str(b)
-            elif b=='H' or b=='M' or b=='O':
-                if c=='H' or c=='M' or c=='O':
-                    concatenacion =""+str(b)+"_"+str(c)
-            if person.has_key(concatenacion):
-                linea = linea + person[concatenacion] + " "
-            else:
-                if a=='H' or a=='M' or a =='O':
-                    linea = linea + a + " "
-                elif b=='H' or b=='M' or b =='O':
-                    linea = linea + b + " "
-                elif c=='H' or c=='M' or c =='O':
-                    linea = linea + c + " "
-                else:
-                    linea = linea + primer_camino[i][j] + " "
-        solucion.write(linea+"\n")
-    solucion.close()
-
-    return
-
+    ###########################################################
+    ###############################################################
+    #Aqui mandare a llamar a la parte de geneticos y despues a generar el mapa de ultima salida...
+    ############################################################
+    ###############################################################
 
 def CostosTotales(diccionario):
     #Humano al K y Salida.
